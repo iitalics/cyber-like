@@ -4,8 +4,9 @@ import os, re
 src="src"
 template = "template.make"
 libs = [
-    # subdir       # lib
-    ("src/util",   "util"),
+    # subdir              # lib
+    ("src/util",          "util"),
+    ("src/backend/sfml",  "sfml-backend"),
 ]
 
 
@@ -33,6 +34,6 @@ with open("libs.make", "w") as fh:
 
     fh.write(".PHONY: clean-libs\nclean-libs:\n")
     for (subdir,lib) in libs:
-        fh.write("\t@$(MAKE) clean -C %s\n" % subdir) 
+        fh.write("\t@$(MAKE) clean -C %s -f .make\n" % subdir) 
 
     print("- generated libs.make")

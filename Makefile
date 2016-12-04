@@ -25,6 +25,10 @@ $(target): $(libs)
 	$(LD) $(LDFLAGS) -o $(target) $(libs)
 	@echo -e "Linked \x1b[37;1m$@\x1b[0m"
 
+.PHONY: run
+run: $(target)
+	@./$(target)
+
 # clean
 .PHONY: clean
 clean: clean-libs
