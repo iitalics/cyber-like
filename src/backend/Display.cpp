@@ -8,7 +8,7 @@ Display::~Display () {}
 
 void Display::set_instance (Display* d)
 {
-  instance_.reset(d);
+    instance_.reset(d);
 }
 
 };
