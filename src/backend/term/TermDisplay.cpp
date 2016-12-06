@@ -62,6 +62,9 @@ void TermDisplay::end_draw ()
 
 void TermDisplay::render_tile (int x, int y, const disp::Tile& tile)
 {
+    if (x < 0 || x >= tb_width() || y < 0 || y >= tb_height())
+        return;
+
     auto cell_buf = tb_cell_buffer();
     auto& out_cell = cell_buf[x + y * tb_width()];
 
