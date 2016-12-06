@@ -1,5 +1,5 @@
 # include
-inc=-I$(SRC_DIR) -I/usr/include/wx-3.1
+inc=-I$(SRC_DIR)
 
 # compilers
 cflags=$(inc) -Wall -g
@@ -11,7 +11,7 @@ ar=ar cr
 
 # sources & objects
 obj=.obj
-srcs=$(shell find * -regex '.*\.\(c\|s\|cpp\)')
+srcs=$(wildcard *.c *.cpp)
 objs=$(srcs:%=$(obj)/%.o)
 objdirs=$(patsubst %,.obj/%,$(shell find * -type d -not -name $(obj)))
 

@@ -5,7 +5,9 @@ all: makefiles $(target)
 
 # linker
 LD=clang++
-LDFLAGS=-O2
+LDFLAGS=-O2 $(linkage)
+
+linkage = -ltermbox
 
 # makefiles
 PYTHON=python2

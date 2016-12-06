@@ -6,7 +6,8 @@ template = "template.make"
 libs = [
     # subdir              # lib
     ("src/util",          "util"),
-    ("src/backend/sfml",  "sfml-backend"),
+    ("src/backend",       "backend"),
+    ("src/backend/term",  "term-backend"),
 ]
 
 
