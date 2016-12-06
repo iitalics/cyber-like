@@ -36,4 +36,4 @@ $(obj)/%.cpp.o: %.cpp
 
 .PHONY: clean
 clean:
-	rm -rf $(obj) #LIBNAME#.a
+	rm -rf $(obj) lib#LIBNAME#.a
