@@ -5,9 +5,9 @@ src="src"
 template = "template.make"
 libs = [
     # subdir              # lib
-    ("src/util",          "util"),
-    ("src/backend",       "backend"),
     ("src/backend/term",  "term-backend"),
+    ("src/backend",       "backend"),
+    ("src/util",          "util"),
 ]
 
 
