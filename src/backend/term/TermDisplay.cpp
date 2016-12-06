@@ -18,17 +18,16 @@ TermDisplay::~TermDisplay ()
 
 uint16_t TermDisplay::conv_color_ (disp::Color col)
 {
-    int r = col.r * 5 / 0xff;
-    int g = col.g * 5 / 0xff;
-    int b = col.b * 5 / 0xff;
+    int r = (col.r * 5 + 0x7f) / 0xff;
+    int g = (col.g * 5 + 0x7f) / 0xff;
+    int b = (col.b * 5 + 0x7f) / 0xff;
 
-    if (r == g && g == b) {
+    /*    if (r == g && g == b) {
         int grey = (col.r + col.g + col.b) * 24 / 0xff / 3;
         return 0xe8 + grey;
     }
-    else {
+    else */
         return 0x10 + (r * 36 + g * 6 + b);
-    }
 }
 
 void TermDisplay::begin_draw ()
@@ -53,6 +52,7 @@ void TermDisplay::end_draw ()
     case -1:
         /* error */
         quit_ = true;
+        tb_shutdown();
         throw Error("TermDisplay event error");
 
     default:
@@ -63,7 +63,7 @@ void TermDisplay::end_draw ()
 void TermDisplay::render_tile (int x, int y, const disp::Tile& tile)
 {
     auto cell_buf = tb_cell_buffer();
-    auto& out_cell = cell_buf[x + y * width_];
+    auto& out_cell = cell_buf[x + y * tb_width()];
 
     out_cell.ch = tile.chr;
     if (!tile.transparent) {

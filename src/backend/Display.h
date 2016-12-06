@@ -21,24 +21,25 @@ struct Color {
                      (rgb24)       & 0xff);
     }
 
-    static inline constexpr Color black ()
-    { return rgb(0x000000); }
-    static inline constexpr Color grey ()
-    { return rgb(0x7f7f7f); }
-    static inline constexpr Color white ()
-    { return rgb(0xffffff); }
-    static inline constexpr Color red ()
-    { return rgb(0xff0000); }
-    static inline constexpr Color green ()
-    { return rgb(0x00ff00); }
-    static inline constexpr Color blue ()
-    { return rgb(0x0000ff); }
-    static inline constexpr Color cyan ()
-    { return rgb(0x00ffff); }
-    static inline constexpr Color magenta ()
-    { return rgb(0xff00ff); }
-    static inline constexpr Color yellow ()
-    { return rgb(0xffff00); }
+    inline uint8_t operator[] (int i) const
+    {
+        switch (i) {
+        case 0: return r;
+        case 1: return g;
+        case 2: return b;
+        default: return 0;
+        }
+    }
+    
+    static inline constexpr Color black () { return rgb(0x000000); }
+    static inline constexpr Color grey () { return rgb(0x7f7f7f); }
+    static inline constexpr Color white () { return rgb(0xffffff); }
+    static inline constexpr Color red () { return rgb(0xff0000); }
+    static inline constexpr Color green () { return rgb(0x00ff00); }
+    static inline constexpr Color blue () { return rgb(0x0000ff); }
+    static inline constexpr Color cyan () { return rgb(0x00ffff); }
+    static inline constexpr Color magenta () { return rgb(0xff00ff); }
+    static inline constexpr Color yellow () { return rgb(0xffff00); }
 };
 
 struct Tile {
@@ -64,7 +65,7 @@ public:
     virtual ~Display () = 0;
 
     /* interface */
-    virtual void render_tile (int x, int y, const Tile& t) = 0;
+    virtual void render_tile (int x, int y, const Tile& tile) = 0;
     virtual void begin_draw () = 0;
     virtual void end_draw () = 0;
 

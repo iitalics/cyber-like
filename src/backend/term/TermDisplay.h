@@ -13,7 +13,7 @@ struct TermDisplay : public disp::Display {
     TermDisplay ();
     virtual ~TermDisplay ();
 
-    virtual void render_tile (int x, int y, const disp::Tile& t);
+    virtual void render_tile (int x, int y, const disp::Tile& tile);
     virtual void begin_draw ();
     virtual void end_draw ();
 
