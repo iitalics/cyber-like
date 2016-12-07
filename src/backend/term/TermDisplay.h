@@ -1,7 +1,9 @@
 #pragma once
 #include <vector>
 #include <stdexcept>
-#include <backend/Display.h>
+#include <boost/optional.hpp>
+#include "../Display.h"
+#include "../Control.h"
 
 #include <termbox.h>
 
@@ -17,10 +19,9 @@ struct TermDisplay : public disp::Display {
     virtual void begin_draw ();
     virtual void end_draw ();
 
-    bool quit () const { return quit_; }
+    boost::optional<Control> poll_ctrl_event ();
 private:
     static uint16_t conv_color_ (disp::Color col);
-    bool quit_;
 };
 
 }

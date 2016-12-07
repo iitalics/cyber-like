@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <memory>
+#include <boost/utility/string_ref.hpp>
 
 namespace disp {
 
@@ -83,7 +84,12 @@ public:
     /* singleton */
     static Display* instance () { return instance_.get(); }
     static void set_instance (Display* to);
-  
+
+    /* utility */
+    void render_text (int x, int y, boost::string_ref text,
+                      Color fg = Color::white(),
+                      int wrap = -1);
+
 protected:
     int width_, height_;
   

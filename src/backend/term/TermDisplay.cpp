@@ -4,7 +4,6 @@ namespace term {
 
 
 TermDisplay::TermDisplay ()
-    : quit_(false)
 {
     tb_init();
     tb_select_input_mode(TB_INPUT_MOUSE);
@@ -41,23 +40,38 @@ void TermDisplay::begin_draw ()
 void TermDisplay::end_draw ()
 {
     tb_present();
+}
+
+boost::optional<Control> TermDisplay::poll_ctrl_event ()
+{
+    boost::optional<Control> retval;
+
     struct tb_event evt;
     switch (tb_poll_event(&evt)) {
     case TB_EVENT_KEY:
-        /* ^Q */
-        if (evt.key == TB_KEY_CTRL_Q)
-            quit_ = true;
+        switch (evt.key) {
+        case TB_KEY_CTRL_Q:
+            retval.reset(ControlCode::quit); break;
+        case TB_KEY_ARROW_LEFT:
+            retval.reset(ControlCode::left); break;
+        case TB_KEY_ARROW_RIGHT:
+            retval.reset(ControlCode::right); break;
+        case TB_KEY_ARROW_UP:
+            retval.reset(ControlCode::up); break;
+        case TB_KEY_ARROW_DOWN:
+            retval.reset(ControlCode::down); break;
+        }
         break;
 
     case -1:
         /* error */
-        quit_ = true;
-        tb_shutdown();
         throw Error("TermDisplay event error");
 
     default:
         break;
     }
+
+    return retval;
 }
 
 void TermDisplay::render_tile (int x, int y, const disp::Tile& tile)

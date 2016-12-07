@@ -1,10 +1,16 @@
 #include "UI.h"
 #include "constants.h"
+#include <sstream>
 
 namespace ui {
 
 UI::UI ()
 {
+}
+
+void UI::process_control (Control ctrl)
+{
+    game_state.process_control(ctrl);
 }
 
 void UI::render (disp::Display& g)
@@ -34,17 +40,34 @@ void UI::render (disp::Display& g)
     border_tile.chr = 0x2554;
     g.render_tile(cx - 1, cy - 1, border_tile);
 
-    Tile fill_tile('.', Color::grey(0x003300), Color::black());
+    /* view */
+    Tile fill_tile('.', Color::grey(1));
     for (int x = 0; x < viewport_width; x++) {
         for (int y = 0; y < viewport_height; y++) {
             g.render_tile(cx + x, cy + y, fill_tile);
         }
     }
+    Tile wall_tile('#', Color::grey(1), Color::grey(2));
+    enum { W = 20, H = 10 };
+    for (int i = 0; i < W; i++)
+        g.render_tile(cx + viewport_width - W + i,
+                      cy + H,
+                      wall_tile);
+    for (int i = 0; i < H; i++)
+        g.render_tile(cx + viewport_width - W,
+                      cy + i,
+                      wall_tile);
 
+    /* player */
     Tile player_tile('@', Color::black(), Color::white());
     g.render_tile(cx + game_state.player.x,
                   cy + game_state.player.y,
                   player_tile);
+
+    /* debug text */
+    std::ostringstream ss;
+    ss << "control: " << int(game_state.last_ctrl);
+    g.render_text(1, 1, ss.str());
 }
 
 
