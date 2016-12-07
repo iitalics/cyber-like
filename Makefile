@@ -4,7 +4,7 @@ bin: $(target)
 all: makefiles $(target)
 
 # linker
-LD=clang++
+LD=g++
 LDFLAGS=-O2 $(linkage)
 
 linkage = -ltermbox
@@ -24,7 +24,7 @@ export SRC_DIR
 
 # target
 $(target): $(libs)
-	$(LD) $(LDFLAGS) -o $(target) $(libs)
+	$(LD) $(LDFLAGS) -o $(target) -Wl,-\( $(libs) -Wl,-\)
 	@echo -e "Linked \x1b[37;1m$@\x1b[0m"
 
 .PHONY: run
