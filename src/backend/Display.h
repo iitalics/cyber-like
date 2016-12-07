@@ -41,11 +41,7 @@ struct Color {
     static inline constexpr Color yellow () { return rgb(0xffff00); }
 
     // i = 0,1,2,3,4,5
-    static inline constexpr Color grey (int i = 3)
-    {
-        int k = 0xff * i / 5;
-        return Color(k, k, k);
-    }
+    static inline constexpr Color grey (int i = 3) { return rgb(0x333333 * i); }
 };
 
 struct Tile {
@@ -61,6 +57,11 @@ struct Tile {
     Tile (uint32_t c, Color f, Color b, bool transp = false)
         : transparent(transp)
         , fg(f), bg(b), chr(c)
+    {}
+
+    Tile (Color b)
+        : transparent(false)
+        , bg(b), chr(' ')
     {}
 };
 

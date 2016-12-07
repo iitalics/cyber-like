@@ -5,11 +5,11 @@
 namespace ui {
 
 struct UI {
-    UI (game::GameState& gs);
+    UI ();
     void render (disp::Display& disp);
 
 private:
-    game::GameState& game_state;
+    game::GameState game_state;
 };
 
 }

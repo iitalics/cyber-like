@@ -12,8 +12,7 @@ int main (int argc, char** argv)
     Display::set_instance(new TermDisplay);
     auto& disp = (TermDisplay&) *Display::instance();
 
-    game::GameState game_state;
-    ui::UI user_interface(game_state);
+    ui::UI user_interface;
     
     while (! disp.quit()) {
         disp.begin_draw();

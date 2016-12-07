@@ -3,8 +3,7 @@
 
 namespace ui {
 
-UI::UI (game::GameState& gs)
-    : game_state(gs)
+UI::UI ()
 {
 }
 
@@ -35,12 +34,17 @@ void UI::render (disp::Display& g)
     border_tile.chr = 0x2554;
     g.render_tile(cx - 1, cy - 1, border_tile);
 
-    Tile fill_tile(' ', Color(), Color::blue());
+    Tile fill_tile('.', Color::grey(0x003300), Color::black());
     for (int x = 0; x < viewport_width; x++) {
         for (int y = 0; y < viewport_height; y++) {
             g.render_tile(cx + x, cy + y, fill_tile);
         }
     }
+
+    Tile player_tile('@', Color::black(), Color::white());
+    g.render_tile(cx + game_state.player.x,
+                  cy + game_state.player.y,
+                  player_tile);
 }
 
 
