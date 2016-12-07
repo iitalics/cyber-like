@@ -6,6 +6,8 @@ template = "template.make"
 libs = [
     # subdir              # lib
     ("src/backend/term",  "term-backend"),
+    ("src/ui",            "ui"),
+    ("src/core",          "core"),
     ("src/backend",       "backend"),
     ("src/util",          "util"),
 ]

@@ -32,7 +32,6 @@ struct Color {
     }
     
     static inline constexpr Color black () { return rgb(0x000000); }
-    static inline constexpr Color grey () { return rgb(0x7f7f7f); }
     static inline constexpr Color white () { return rgb(0xffffff); }
     static inline constexpr Color red () { return rgb(0xff0000); }
     static inline constexpr Color green () { return rgb(0x00ff00); }
@@ -40,6 +39,13 @@ struct Color {
     static inline constexpr Color cyan () { return rgb(0x00ffff); }
     static inline constexpr Color magenta () { return rgb(0xff00ff); }
     static inline constexpr Color yellow () { return rgb(0xffff00); }
+
+    // i = 0,1,2,3,4,5
+    static inline constexpr Color grey (int i = 3)
+    {
+        int k = 0xff * i / 5;
+        return Color(k, k, k);
+    }
 };
 
 struct Tile {
