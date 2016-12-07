@@ -1,6 +1,7 @@
 #include "UI.h"
 #include "constants.h"
 #include <sstream>
+#include <boost/format.hpp>
 
 namespace ui {
 
@@ -65,9 +66,8 @@ void UI::render (disp::Display& g)
                   player_tile);
 
     /* debug text */
-    std::ostringstream ss;
-    ss << "control: " << int(game_state.last_ctrl);
-    g.render_text(1, 1, ss.str());
+    auto text = boost::format("control: %d") % game_state.last_ctrl;
+    g.render_text(1, 1, text.str());
 }
 
 
