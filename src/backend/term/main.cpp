@@ -16,10 +16,12 @@ int main (int argc, char** argv)
     {
         ui::UI user_interface;
         for (bool quit = false; ! quit; ) {
+            /* display */
             disp.begin_draw();
             user_interface.render(disp);
             disp.end_draw();
 
+            /* handle events */
             if (auto maybe_ctrl = disp.poll_ctrl_event()) {
                 if (*maybe_ctrl == ControlCode::quit)
                     quit = true;

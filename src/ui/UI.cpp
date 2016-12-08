@@ -42,32 +42,23 @@ void UI::render (disp::Display& g)
     g.render_tile(cx - 1, cy - 1, border_tile);
 
     /* view */
-    Tile fill_tile('.', Color::grey(1));
     for (int x = 0; x < viewport_width; x++) {
         for (int y = 0; y < viewport_height; y++) {
+            auto map_tile = game_state.map.tile_at(x, y);
+            Tile fill_tile(map_tile.chr, map_tile.fg, map_tile.bg);
             g.render_tile(cx + x, cy + y, fill_tile);
         }
     }
-    Tile wall_tile('#', Color::grey(1), Color::grey(2));
-    enum { W = 20, H = 10 };
-    for (int i = 0; i < W; i++)
-        g.render_tile(cx + viewport_width - W + i,
-                      cy + H,
-                      wall_tile);
-    for (int i = 0; i < H; i++)
-        g.render_tile(cx + viewport_width - W,
-                      cy + i,
-                      wall_tile);
-
     /* player */
     Tile player_tile('@', Color::black(), Color::white());
     g.render_tile(cx + game_state.player.x,
                   cy + game_state.player.y,
                   player_tile);
-
-    /* debug text */
-    auto text = boost::format("control: %d") % game_state.last_ctrl;
-    g.render_text(1, 1, text.str());
+    auto tile_on = game_state.map.tile_at(game_state.player.x,
+                                          game_state.player.y);
+    g.render_text(cx + 1, cy + viewport_height + 1,
+                  tile_on.description(),
+                  Color::grey(2));
 }
 
 
