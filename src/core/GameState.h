@@ -22,6 +22,7 @@ struct GameState {
 
     /* etc */
     Control last_ctrl;
+    std::string status_text;
 };
 
 }

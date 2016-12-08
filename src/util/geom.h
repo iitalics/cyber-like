@@ -18,8 +18,8 @@ struct vec2 {
     inline constexpr vec2 operator- (vec2 b) const { return vec2(x - b.x, y - b.y); }
     inline constexpr vec2 operator* (T a) const { return vec2(x * a, y * a); }
     inline constexpr vec2 operator- () const { return vec2(-x, -y); }
-    inline constexpr vec2 operator== (vec2 b) const { return x == b.x && y == b.y; }
-    inline constexpr vec2 operator!= (vec2 b) const { return x == b.x && y == b.y; }
+    inline constexpr bool operator== (vec2 b) const { return x == b.x && y == b.y; }
+    inline constexpr bool operator!= (vec2 b) const { return x != b.x || y != b.y; }
 
     inline vec2& operator+= (vec2 b)
     {

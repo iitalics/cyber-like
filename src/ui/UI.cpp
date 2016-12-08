@@ -54,10 +54,8 @@ void UI::render (disp::Display& g)
     g.render_tile(cx + game_state.player.x,
                   cy + game_state.player.y,
                   player_tile);
-    auto tile_on = game_state.map.tile_at(game_state.player.x,
-                                          game_state.player.y);
     g.render_text(cx + 1, cy + viewport_height + 1,
-                  tile_on.description(),
+                  game_state.status_text,
                   Color::grey(2));
 }
 

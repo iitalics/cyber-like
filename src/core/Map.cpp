@@ -23,7 +23,7 @@ Map::Map ()
     rgen.seed(HRClock::now().time_since_epoch().count());
 
     tiles_ = {
-        Tile(' ', Color::black(), Color::black()),    // 0
+        Tile(' ', Color::black(), Color::black(), 0), // 0
         Tile('-', Color::yellow(), Color::black()),   // 1
         Tile('.', Color::grey(1), Color::black()),    // 2
         Tile(',', Color::grey(1), Color::black()),    // 3
@@ -37,11 +37,30 @@ Map::Map ()
         Tile(' ', Color::red(), Color::rgb(0x000033)), // 10
 
         Tile('D', Color::grey(3), Color::grey(1), 0), // 11
+        Tile('o', Color::grey(3), Color::grey(0), 0), // 12
+        Tile(' ', Color::black(), Color::black(), 1), // 13
     };
 
-    index_grid_.reserve(size * size);
-    std::fill_n(std::back_inserter(index_grid_), size * size, 2);
+    tiles_[11].set_description("A door.");
+    tiles_[12].set_description("A streetlight.");
 
+    index_grid_.reserve(size * size);
+    std::fill_n(std::back_inserter(index_grid_), size * size, 0);
+
+    std::uniform_int_distribution<int> distr(2, 3);
+    for (int y = 0; y < size; y++)
+        for (int x = 0; x < size; x++) {
+            index_grid_[x + y * size] =
+                y < 16 ? distr(rgen) : 13;
+        }
+
+    for (int x = 0; x < size; x++) {
+        if (x % 4 == 2)
+            index_grid_[x + 20 * size] = 1;
+        if (x % 9 == 3)
+            index_grid_[x + 14 * size] = 12;
+    }
+    
     for (int x = 0; x < 20; x++)
         for (int y = 0; y < 10; y++) {
             int t = 5;
