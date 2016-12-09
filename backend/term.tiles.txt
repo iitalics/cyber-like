@@ -1,9 +1,9 @@
 #### UI ####
-# a hhhh b
-# v      v
-# v      v
-# c hhhh d
-
+# borders:
+#     a hhhh b
+#     v      v
+#     v      v
+#     c hhhh d
 ui-vp-a     (2554)  fff -
 ui-vp-b     (2557)  fff -
 ui-vp-c     (255a)  fff -
@@ -24,10 +24,14 @@ stone-wall-2 [#]  666 333
 stone-wall-3 [ ]  666 333
 door-1       [D]  999 333
 sign-1       [ ]  0f0 000
+sign-1-S     [S]  0ff 000
+sign-1-O     [O]  0ff 000
+sign-1-F     [F]  0ff 000
+sign-1-T     [T]  0ff 000
+sign-1-W     [W]  0ff 000
 sign-1-A     [A]  0ff 000
-sign-1-B     [B]  0ff 000
-sign-1-C     [C]  0ff 000
-sign-1-D     [D]  0ff 000
+sign-1-R     [R]  0ff 000
+sign-1-E     [E]  0ff 000
 
 #### People ####
 @player      [@]  000 fff
