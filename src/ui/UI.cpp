@@ -51,7 +51,7 @@ void UI::render (disp::Display& g)
     for (int x = 0; x < viewport_width; x++) {
         for (int y = 0; y < viewport_height; y++) {
             auto map_tile = game_state.map.tile_at(x, y);
-            //g.render_tile(cx + x, cy + y, fill_tile);
+            g.render_tile(cx + x, cy + y, map_tile.tile_id);
         }
     }
     /* player */

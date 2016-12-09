@@ -89,8 +89,9 @@ void TermDisplay::render_tile (int x, int y, disp::TileSet::id tile_id)
     auto& tb_cell = tb_cell_buffer()[x + y * tb_width()];
 
     if (tile_id == TileSet::missing_id) {
-        tb_cell.ch = ' ';
-        tb_cell.bg = 0x10; // black
+        tb_cell.ch = '?';
+        tb_cell.fg = conv_color(Color::blue());
+        tb_cell.bg = conv_color(Color::magenta());
     }
     else {
         auto& tile = tiles[tile_id];

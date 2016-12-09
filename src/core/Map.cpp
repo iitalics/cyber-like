@@ -34,7 +34,8 @@ Map::Map ()
 
     for (int y = 0; y < size; y++)
         for (int x = 0; x < size; x++) {
-            grid_[x + y * size] = size < 16 ? pave_tile() : street_tile;
+            grid_[x + y * size] =
+                y < 16 ? pave_tile() : street_tile;
         }
 
     /* lamps and road markings */
@@ -49,7 +50,7 @@ Map::Map ()
 
     /* a building */
     Tile stone_wall_1(ts->tile_by_name("stone-wall-1"), false);
-    Tile stone_wall_2(ts->tile_by_name("stone-wall-2"), false);
+    Tile stone_wall_2(ts->tile_by_name("stone-wall-3"), false);
     for (int x = 0; x < 20; x++)
         for (int y = 0; y < 10; y++) {
             Tile& t = (x == 0 || y == 0 || x == 19 || y == 9)

@@ -4,12 +4,12 @@
 # v      v
 # c hhhh d
 
-ui-vp-a     [#2554]  fff -
-ui-vp-b     [#2557]  fff -
-ui-vp-c     [#255a]  fff -
-ui-vp-d     [#255d]  fff -
-ui-vp-h     [#2550]  fff -
-ui-vp-v     [#2551]  fff -
+ui-vp-a     (2554)  fff -
+ui-vp-b     (2557)  fff -
+ui-vp-c     (255a)  fff -
+ui-vp-d     (255d)  fff -
+ui-vp-h     (2550)  fff -
+ui-vp-v     (2551)  fff -
 
 #### Map ####
 none         [ ]  000 000
@@ -21,13 +21,13 @@ lamp-1       [o]  999 -
 lamp-2       [o]  ccc -
 stone-wall-1 [+]  666 333
 stone-wall-2 [#]  666 333
-stone-wall 3 [ ]  666 333
+stone-wall-3 [ ]  666 333
 door-1       [D]  999 333
-sign-1       [ ]  f90 300
-sign-1-A     [A]  f90 300
-sign-1-B     [B]  f90 300
-sign-1-C     [C]  f90 300
-sign-1-D     [D]  f90 300
+sign-1       [ ]  0f0 000
+sign-1-A     [A]  0ff 000
+sign-1-B     [B]  0ff 000
+sign-1-C     [C]  0ff 000
+sign-1-D     [D]  0ff 000
 
 #### People ####
 @player      [@]  000 fff

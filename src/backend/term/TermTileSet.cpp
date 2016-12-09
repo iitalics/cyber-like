@@ -51,7 +51,7 @@ void TermTileSet::load_from_directory (boost::string_ref dir_path)
         auto fmt = boost::format("could not load tileset file: %s") % path;
         throw std::runtime_error(fmt.str());
     }
-        
+
     /* TODO: try / catch & log */
     std::string line;
     while (!input_file.eof()) {
@@ -65,24 +65,68 @@ void TermTileSet::load_from_directory (boost::string_ref dir_path)
     }
 }
 
-static boost::regex line_regexp("^(\\S+)\\s+"
-                                "\\[(.+)\\]\\s+"
-                                "(\\S\\S\\S)\\s+"
-                                "(\\S\\S\\S|\\-)");
+
+using regex_result = boost::match_results<boost::string_ref::iterator>;
+/*
+  line := name repr fg bg
+  repr := '[' chr ']' | '(' hex hex hex hex ')'
+  fg := hex hex hex
+  bg := hex hex hex | '-'
+*/
+static boost::regex line_regex("^(\\S+)\\s+"
+                                "(\\[.\\]|\\([0-9a-f]{4}\\))\\s+"
+                                "([0-9a-f]{3})\\s+"
+                                "([0-9a-f]{3}|\\-)\\s*$");
+
+static inline uint8_t hex2int (char c)
+{
+    if ('0' <= c && c <= '9')
+        return c - '0';
+    else
+        return c - 'a' + 10;
+}
+
+static inline Color hex_color (boost::string_ref s)
+{
+    int r = hex2int(s[0]);
+    int g = hex2int(s[1]);
+    int b = hex2int(s[2]);
+    return Color(r * 0x11, g * 0x11, b * 0x11);
+}
 
 void TermTileSet::parse_tileset_line (boost::string_ref line)
 {
-    boost::match_results<boost::string_ref::iterator> mr;
+    regex_result rr;
 
-    if (boost::regex_match(line.begin(), line.end(), mr, line_regexp)) {
-        auto& name = mr[1];
-        auto& repr = mr[2];
-        // auto& fg = mr[3];
-        // auto& bg = mr[4];
-        log_file << "new tile: " << name << ", repr = [" << repr << "]" << std::endl;
-
+    if (boost::regex_match(line.begin(), line.end(), rr, line_regex)) {
+        auto name = rr[1];
+        auto repr = rr[2].str();
         name_mapping[name] = tiles.size();
-        tiles.push_back(TermCell { '?', Color::blue(), Color::magenta(), false });
+
+        uint32_t chr;
+        if (repr[0] == '(') {
+            uint8_t n3 = hex2int(repr[1]);
+            uint8_t n2 = hex2int(repr[2]);
+            uint8_t n1 = hex2int(repr[3]);
+            uint8_t n0 = hex2int(repr[4]);
+            chr = n0 | (n1 * 16) | (n2 * 16 * 16) | (n3 * 16 * 16 * 16);
+        }
+        else {
+            chr = repr[1];
+        }
+
+        auto fg = hex_color(rr[3].str());
+        if (rr[4] == "-") {
+            // no background; transparent
+            tiles.push_back(TermCell { chr, fg, Color(), true });
+            log_file << "created tile " << name << " transparent" << std::endl;
+        }
+        else {
+            // background color
+            auto bg = hex_color(rr[4].str());
+            tiles.push_back(TermCell { chr, fg, bg, false });
+            log_file << "created tile " << name << std::endl;
+        }
     }
 }
 
