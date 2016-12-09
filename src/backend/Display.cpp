@@ -14,13 +14,18 @@ void Display::set_instance (Display* d)
 
 void Display::render_text (int x, int y, boost::string_ref text, Color fg, int wrap)
 {
-    Tile tile(0, fg);
-
     int i = 0;
     for (auto it = text.cbegin(); it != text.cend(); ) {
         /* get utf8 char */
-        tile.chr = utf8::next(it, text.cend());
-        render_tile(x + i, y, tile);
+        uint32_t chr;
+        try {
+            chr = utf8::next(it, text.cend());
+        }
+        catch (utf8::exception& utf_err) {
+            return;
+        }
+
+        render_tile(x + i, y, tile_set->tile_for_char(chr, fg));
 
         /* advance (and possibly wrap) */
         i++;

@@ -32,7 +32,7 @@ void GameState::process_control (Control k)
 
     if (player_dest != player) {
         auto& dest_tile = map.tile_at(player_dest.x, player_dest.y);
-        status_text = dest_tile.description().to_string();
+        status_text = dest_tile.description;
 
         if (dest_tile.walkable)
             player = player_dest;

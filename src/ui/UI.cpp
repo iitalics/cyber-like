@@ -21,39 +21,43 @@ void UI::render (disp::Display& g)
     int cx = (g.width() - viewport_width) / 2;
     int cy = (g.height() - viewport_height) / 2;
 
+    auto* ts = g.tile_set.get();
+    
     /* viewport border */
-    Tile border_tile(0x2550, Color::white());
+    //   a hhh b
+    //   v     v
+    //   v     v
+    //   c hhh d
+    auto tile_h = ts->tile_by_name("ui-vp-h");
     for (int x = 0; x < viewport_width; x++) {
-        g.render_tile(cx + x, cy - 1, border_tile);
-        g.render_tile(cx + x, cy + viewport_height, border_tile);
+        g.render_tile(cx + x, cy - 1, tile_h);
+        g.render_tile(cx + x, cy + viewport_height, tile_h);
     }
-    border_tile.chr = 0x2551;
+    auto tile_v = ts->tile_by_name("ui-vp-v");
     for (int y = 0; y < viewport_height; y++) {
-        g.render_tile(cx - 1, cy + y, border_tile);
-        g.render_tile(cx + viewport_width, cy + y, border_tile);
+        g.render_tile(cx - 1, cy + y, tile_v);
+        g.render_tile(cx + viewport_width, cy + y, tile_v);
     }
-    border_tile.chr = 0x2557;
-    g.render_tile(cx + viewport_width, cy - 1, border_tile);
-    border_tile.chr = 0x255a;
-    g.render_tile(cx - 1, cy + viewport_height, border_tile);
-    border_tile.chr = 0x255d;
-    g.render_tile(cx + viewport_width, cy + viewport_height, border_tile);
-    border_tile.chr = 0x2554;
-    g.render_tile(cx - 1, cy - 1, border_tile);
+    g.render_tile(cx - 1, cy - 1,
+                  ts->tile_by_name("ui-vp-a"));
+    g.render_tile(cx + viewport_width, cy - 1,
+                  ts->tile_by_name("ui-vp-b"));
+    g.render_tile(cx - 1, cy + viewport_height,
+                  ts->tile_by_name("ui-vp-c"));
+    g.render_tile(cx + viewport_width, cy + viewport_height,
+                  ts->tile_by_name("ui-vp-d"));
 
     /* view */
     for (int x = 0; x < viewport_width; x++) {
         for (int y = 0; y < viewport_height; y++) {
             auto map_tile = game_state.map.tile_at(x, y);
-            Tile fill_tile(map_tile.chr, map_tile.fg, map_tile.bg);
-            g.render_tile(cx + x, cy + y, fill_tile);
+            //g.render_tile(cx + x, cy + y, fill_tile);
         }
     }
     /* player */
-    Tile player_tile('@', Color::black(), Color::white());
     g.render_tile(cx + game_state.player.x,
                   cy + game_state.player.y,
-                  player_tile);
+                  ts->tile_by_name("@player"));
     g.render_text(cx + 1, cy + viewport_height + 1,
                   game_state.status_text,
                   Color::grey(2));

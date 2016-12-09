@@ -7,7 +7,7 @@ all: makefiles $(target)
 LD=g++
 LDFLAGS=-O2 $(linkage)
 
-linkage = -ltermbox
+linkage = -ltermbox -llua5.1 -lboost_regex
 
 # makefiles
 PYTHON=python2

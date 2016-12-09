@@ -2,21 +2,13 @@
 
 namespace game {
 
-
-Tile::Tile (uint32_t c,
-            disp::Color f, disp::Color b,
+Tile::Tile (disp::TileSet::id tid,
             bool w)
-    : chr(c), fg(f), bg(b), walkable(w)
-    , desc_ptr("")
+    : tile_id(tid)
+    , walkable(w)
+    , description("")
 {}
 
-Tile Tile::unwalkable ()
-{
-    return Tile(' ',
-                disp::Color::black(),
-                disp::Color::black(),
-                false);
-}
 
 }
 

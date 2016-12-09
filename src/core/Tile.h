@@ -6,30 +6,17 @@
 namespace game {
 
 struct Tile {
-    Tile (uint32_t chr,
-          disp::Color fg, disp::Color bg,
-          bool walkable = true);
-
-    static Tile unwalkable ();
+    explicit Tile (disp::TileSet::id tile_id,
+                   bool walkable = true);
     
     /* appearance */
-    uint32_t chr;
-    disp::Color fg, bg;
+    disp::TileSet::id tile_id;
 
     /* attributes */
     bool walkable;
 
     // ehh
-    std::string desc_ptr;
-    inline boost::string_ref description () const
-    {
-        return desc_ptr;
-    }
-    inline Tile& set_description (boost::string_ref r)
-    {
-        desc_ptr = r.to_string();
-        return *this;
-    }
+    std::string description;
 };
 
 }

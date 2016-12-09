@@ -10,8 +10,8 @@ struct Map {
 
 private:
     enum { size = 60 };
-    std::vector<Tile> tiles_;
-    std::vector<int> index_grid_;
+    std::vector<Tile> grid_;
+    Tile back_tile_;
 };
 
 }

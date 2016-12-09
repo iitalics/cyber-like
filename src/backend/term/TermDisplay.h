@@ -9,19 +9,24 @@
 
 namespace term {
 
-using Error = std::runtime_error;
+struct TermCell {
+    uint32_t chr;
+    disp::Color fg, bg;
+    bool transparent;
+};
 
 struct TermDisplay : public disp::Display {
     TermDisplay ();
     virtual ~TermDisplay ();
 
-    virtual void render_tile (int x, int y, const disp::Tile& tile);
+    virtual void render_tile (int x, int y, disp::TileSet::id tile);
     virtual void begin_draw ();
     virtual void end_draw ();
 
     boost::optional<Control> poll_ctrl_event ();
+    static uint16_t conv_color (disp::Color col);
 private:
-    static uint16_t conv_color_ (disp::Color col);
+    std::vector<TermCell> tiles;
 };
 
 }

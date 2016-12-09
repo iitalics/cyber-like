@@ -1,21 +1,28 @@
 #include "TermDisplay.h"
+#include "TermTileSet.h"
 
 namespace term {
 
+using namespace disp;
 
 TermDisplay::TermDisplay ()
 {
     tb_init();
     tb_select_input_mode(TB_INPUT_MOUSE);
     tb_select_output_mode(TB_OUTPUT_256);
+
+    auto tts = new TermTileSet(tiles);
+    tts->load_from_directory("./backend");
+    tile_set.reset(tts);
 }
 
 TermDisplay::~TermDisplay ()
 {
+    tb_present();
     tb_shutdown();
 }
 
-uint16_t TermDisplay::conv_color_ (disp::Color col)
+uint16_t TermDisplay::conv_color (Color col)
 {
     int r = (col.r * 5 + 0x7f) / 0xff;
     int g = (col.g * 5 + 0x7f) / 0xff;
@@ -65,7 +72,7 @@ boost::optional<Control> TermDisplay::poll_ctrl_event ()
 
     case -1:
         /* error */
-        throw Error("TermDisplay event error");
+        throw std::runtime_error("TermDisplay event error");
 
     default:
         break;
@@ -74,19 +81,24 @@ boost::optional<Control> TermDisplay::poll_ctrl_event ()
     return retval;
 }
 
-void TermDisplay::render_tile (int x, int y, const disp::Tile& tile)
+void TermDisplay::render_tile (int x, int y, disp::TileSet::id tile_id)
 {
     if (x < 0 || x >= tb_width() || y < 0 || y >= tb_height())
         return;
 
-    auto cell_buf = tb_cell_buffer();
-    auto& out_cell = cell_buf[x + y * tb_width()];
+    auto& tb_cell = tb_cell_buffer()[x + y * tb_width()];
 
-    out_cell.ch = tile.chr;
-    if (!tile.transparent) {
-        out_cell.bg = conv_color_(tile.bg);
+    if (tile_id == TileSet::missing_id) {
+        tb_cell.ch = ' ';
+        tb_cell.bg = 0x10; // black
     }
-    out_cell.fg = conv_color_(tile.fg);
+    else {
+        auto& tile = tiles[tile_id];
+        tb_cell.ch = tile.chr;
+        tb_cell.fg = conv_color(tile.fg);
+        if (!tile.transparent)
+            tb_cell.bg = conv_color(tile.bg);
+    }
 }
 
 }
