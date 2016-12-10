@@ -14,9 +14,6 @@ struct Tile {
 
     /* attributes */
     bool walkable;
-
-    // ehh
-    std::string description;
 };
 
 }

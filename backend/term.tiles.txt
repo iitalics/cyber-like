@@ -20,12 +20,12 @@ road-mark-1  [-]  ff0 000
 road-mark-2  [=]  ff0 000
 lamp-1       [o]  999 -
 lamp-2       [o]  ccc -
-stone-wall-1 [+]  666 333
-stone-wall-2 [#]  666 333
-stone-wall-3 [ ]  666 333
+stone-wall-1 [+]  999 666
+stone-wall-2 [#]  999 666
+stone-wall-3 [ ]  999 666
 door-1       [D]  999 333
-sign-1       [ ]  0ff 000
-sign-1-?     [?]  0ff 000
+sign-1       [ ]  f0f 000
+sign-1-?     [?]  f0f 000
 
 #### People ####
 @player      [@]  000 9ff

@@ -29,15 +29,13 @@ void Display::render_text (int x, int y,
             return;
         }
 
-        if (chr != ' ') {
-            // e.g:
-            // chr = 'a', font = "xyz"
-            // =>  tile_name = "xyz-a"
-            tile_name.resize(font.size());
-            tile_name.push_back('-');
-            utf8::append(chr, std::back_inserter(tile_name));
-            render_tile(x + i, y, tile_set->tile_by_name(tile_name));
-        }
+        // e.g:
+        // chr = 'a', font = "xyz"
+        // =>  tile_name = "xyz-a"
+        tile_name.resize(font.size());
+        tile_name.push_back('-');
+        utf8::append(chr, std::back_inserter(tile_name));
+        render_tile(x + i, y, tile_set->tile_by_name(tile_name));
 
         /* advance (and possibly wrap) */
         i++;

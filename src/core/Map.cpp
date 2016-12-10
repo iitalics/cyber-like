@@ -41,7 +41,6 @@ Map::Map ()
 
     /* lamps and road markings */
     Tile lamp(ts->tile_by_name("lamp-1"), false);
-    lamp.description = "A streetlight.";
     for (int x = 0; x < size; x++) {
         if (x % 5 == 2)
             grid_[x + 20 * size] = Tile(ts->tile_by_name("road-mark-1"));
@@ -62,16 +61,13 @@ Map::Map ()
         }
 
     /* a sign & a door */
-    grid_[29 + 8 * size] = Tile(ts->tile_by_name("sign-1"));
-    char m[] = "SOFTWARE";
-    for (int i = 0; i < 8; i++) {
+    char m[] = " VAPORWAVE ";
+    for (int i = 0; m[i]; i++) {
         auto fmt = boost::format("sign-1-%c") % m[i];
-        grid_[30 + i + 8 * size] = Tile(ts->tile_by_name(fmt.str()));
+        grid_[29 + i + 9 * size] = Tile(ts->tile_by_name(fmt.str()));
     }
-    grid_[38 + 8 * size] = Tile(ts->tile_by_name("sign-1"));
    
     Tile door(ts->tile_by_name("door-1"), false);
-    door.description = "A door.";
     grid_[33 + 10 * size] =
         grid_[34 + 10 * size] = door;
 }
