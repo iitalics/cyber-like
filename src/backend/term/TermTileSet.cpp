@@ -5,6 +5,7 @@
 #include <boost/regex.hpp>
 #include <fstream>
 #include <stdexcept>
+#include <utf8.h>
 
 namespace term {
 
@@ -99,9 +100,8 @@ void TermTileSet::parse_tileset_line (boost::string_ref line)
     regex_result rr;
 
     if (boost::regex_match(line.begin(), line.end(), rr, line_regex)) {
-        auto name = rr[1];
+        auto name = rr[1].str();
         auto repr = rr[2].str();
-        name_mapping[name] = tiles.size();
 
         uint32_t chr;
         if (repr[0] == '(') {
@@ -116,19 +116,46 @@ void TermTileSet::parse_tileset_line (boost::string_ref line)
         }
 
         auto fg = hex_color(rr[3].str());
-        if (rr[4] == "-") {
-            // no background; transparent
-            tiles.push_back(TermCell { chr, fg, Color(), true });
-            log_file << "created tile " << name << " transparent" << std::endl;
+        auto bg = boost::optional<Color>();
+        if (rr[4] != "-") {
+            bg.reset(hex_color(rr[4].str()));
+        }
+
+        if (boost::string_ref(name).ends_with("-?") && chr == '?') {
+            log_file << "generating font: " << name << std::endl;
+            name.pop_back(); // remove ?
+            generate_font(std::move(name), fg, bg);
         }
         else {
-            // background color
-            auto bg = hex_color(rr[4].str());
-            tiles.push_back(TermCell { chr, fg, bg, false });
-            log_file << "created tile " << name << std::endl;
+            log_file << "generating tile: " << name << std::endl;
+            generate_tile(std::move(name), chr, fg, bg);
         }
     }
 }
 
+void TermTileSet::generate_tile (std::string name,
+                                 uint32_t repr,
+                                 disp::Color fg,
+                                 boost::optional<disp::Color> bg)
+{
+    name_mapping[std::move(name)] = tiles.size();
+    if (bg)
+        tiles.push_back(TermCell { repr, fg, *bg, false });
+    else
+        tiles.push_back(TermCell { repr, fg, Color(), true });
+}
+
+void TermTileSet::generate_font (std::string font_name,
+                                 disp::Color fg,
+                                 boost::optional<disp::Color> bg)
+{
+    const size_t base_font_name_size = font_name.size();
+
+    for (int c = 1; c < 128; c++) {
+        font_name.resize(base_font_name_size);
+        utf8::append(c, std::back_inserter(font_name));
+        generate_tile(font_name, c, fg, bg);
+    }
+}
 
 }

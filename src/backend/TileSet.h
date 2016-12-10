@@ -13,7 +13,6 @@ struct TileSet {
 
     virtual void load_from_directory (boost::string_ref path) = 0;
     virtual id tile_by_name (boost::string_ref name) = 0;
-    virtual id tile_for_char (uint32_t chr, Color col) = 0;
 };
 
 }

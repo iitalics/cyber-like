@@ -14,6 +14,13 @@ struct TermTileSet : public disp::TileSet {
 
     virtual void load_from_directory (boost::string_ref path);
     void parse_tileset_line (boost::string_ref line);
+    void generate_tile (std::string name,
+                        uint32_t repr,
+                        disp::Color fg,
+                        boost::optional<disp::Color> bg);
+    void generate_font (std::string font_prefix,
+                        disp::Color fg,
+                        boost::optional<disp::Color> bg);
 
     std::vector<TermCell>& tiles;
     std::unordered_map<std::string, id> name_mapping;

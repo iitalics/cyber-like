@@ -10,6 +10,7 @@ ui-vp-c     (255a)  fff -
 ui-vp-d     (255d)  fff -
 ui-vp-h     (2550)  fff -
 ui-vp-v     (2551)  fff -
+ui-status-font-? [?] 999 -
 
 #### Map ####
 none         [ ]  000 000
@@ -23,15 +24,11 @@ stone-wall-1 [+]  666 333
 stone-wall-2 [#]  666 333
 stone-wall-3 [ ]  666 333
 door-1       [D]  999 333
-sign-1       [ ]  0f0 000
-sign-1-S     [S]  0ff 000
-sign-1-O     [O]  0ff 000
-sign-1-F     [F]  0ff 000
-sign-1-T     [T]  0ff 000
-sign-1-W     [W]  0ff 000
-sign-1-A     [A]  0ff 000
-sign-1-R     [R]  0ff 000
-sign-1-E     [E]  0ff 000
+sign-1       [ ]  0ff 000
+sign-1-?     [?]  0ff 000
 
 #### People ####
-@player      [@]  000 fff
+@player      [@]  000 9ff
+
+
+

@@ -60,7 +60,7 @@ void UI::render (disp::Display& g)
                   ts->tile_by_name("@player"));
     g.render_text(cx + 1, cy + viewport_height + 1,
                   game_state.status_text,
-                  Color::grey(2));
+                  "ui-status-font");
 }
 
 

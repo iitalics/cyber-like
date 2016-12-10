@@ -26,7 +26,7 @@ public:
 
     /* utility */
     void render_text (int x, int y, boost::string_ref text,
-                      Color fg = Color::white(),
+                      boost::string_ref font,
                       int wrap = -1);
 
 protected:
