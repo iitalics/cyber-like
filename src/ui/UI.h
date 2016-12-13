@@ -5,12 +5,32 @@
 
 namespace ui {
 
+/**
+   User interface class.
+   Responsible for rendering the game, as well as managing the game state (delegating actions to it).
+ */
 struct UI {
+    /**
+       Default constructor for UI.
+    */
     UI ();
-    void process_control (Control ctrl);
+
+    /**
+       Render the game.
+       @param disp display instance to render with.
+    */
     void render (disp::Display& disp);
-    
-private:
+
+    /**
+       Process user input control.
+       Delegates ctrl appropriately.
+       @param ctrl the kind of user input
+    */
+    void process_control (Control ctrl);
+
+    /**
+       Internal game state for current game.
+    */
     game::GameState game_state;
 };
 

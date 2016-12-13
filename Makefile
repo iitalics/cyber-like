@@ -3,10 +3,10 @@ target=./cyb
 bin: $(target)
 all: makefiles $(target)
 
+
 # linker
 LD=g++
 LDFLAGS=-O2 $(linkage)
-
 linkage = -ltermbox -llua5.1 -lboost_regex
 
 # makefiles
@@ -36,3 +36,10 @@ run: $(target)
 clean: clean-libs
 	rm -f $(target)
 
+
+# docs
+docs_gen=doxygen
+docs_config=doxygen-config
+.PHONY: docs
+docs:
+	$(docs_gen) $(docs_config)
