@@ -47,20 +47,34 @@ void UI::render (disp::Display& g)
     g.render_tile(cx + viewport_width, cy + viewport_height,
                   ts->tile_by_name("ui-vp-d"));
 
-    /* view */
+    /* view: map */
     for (int x = 0; x < viewport_width; x++) {
         for (int y = 0; y < viewport_height; y++) {
             auto map_tile = game_state.map.tile_at(x, y);
             g.render_tile(cx + x, cy + y, map_tile.tile_id);
         }
     }
+    for (auto& ent : game_state.scene) {
+        g.render_tile(cx + ent->pos.x,
+                      cy + ent->pos.y,
+                      ent->appearance);
+    }
+
     /* player */
     g.render_tile(cx + game_state.player.x,
                   cy + game_state.player.y,
                   ts->tile_by_name("@player"));
-    g.render_text(cx + 1, cy + viewport_height + 1,
-                  game_state.status_text,
-                  "ui-status-font");
+
+    if (!game_state.interact_desc.empty()) {
+        int tx = cx + 1;
+        int ty = cy + viewport_height + 1;
+        tx = g.render_text(tx, ty, "[", "ui-direction-font");
+        tx = g.render_text(tx, ty, game_state.interact_direction,
+                           "ui-direction-font");
+        tx = g.render_text(tx, ty, "] ", "ui-direction-font");
+        tx = g.render_text(tx, ty, game_state.interact_desc,
+                           "ui-desc-font");
+    }
 }
 
 

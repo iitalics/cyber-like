@@ -25,9 +25,9 @@ public:
     static void set_instance (Display* to);
 
     /* utility */
-    void render_text (int x, int y, boost::string_ref text,
-                      boost::string_ref font,
-                      int wrap = -1);
+    int render_text (int x, int y, boost::string_ref text,
+                     boost::string_ref font,
+                     int wrap = -1);
 
 protected:
     int width_, height_;

@@ -151,7 +151,7 @@ void TermTileSet::generate_font (std::string font_name,
 {
     const size_t base_font_name_size = font_name.size();
 
-    for (int c = 1; c < 128; c++) {
+    for (int c = 1; c < 255; c++) {
         font_name.resize(base_font_name_size);
         utf8::append(c, std::back_inserter(font_name));
         generate_tile(font_name, c, fg, bg);

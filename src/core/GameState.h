@@ -2,6 +2,7 @@
 #include "../util/geom.h"
 #include "../backend/Control.h"
 #include "Map.h"
+#include "Entity.h"
 
 namespace game {
 
@@ -14,15 +15,17 @@ struct GameState {
     ivec player;
     
     /* scene */
+    std::vector<std::unique_ptr<Entity>> scene;
 
     /* map */
     Map map;
 
-    /* items */
-
     /* etc */
     Control last_ctrl;
-    std::string status_text;
+
+    /* info about interacting entity; describes entity you're moving into */
+    std::string interact_direction;
+    std::string interact_desc;
 };
 
 }

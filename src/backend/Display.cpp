@@ -12,9 +12,9 @@ void Display::set_instance (Display* d)
     instance_.reset(d);
 }
 
-void Display::render_text (int x, int y,
-                           boost::string_ref text,
-                           boost::string_ref font, int wrap)
+int Display::render_text (int x, int y,
+                          boost::string_ref text,
+                          boost::string_ref font, int wrap)
 {
     auto tile_name = font.to_string();
     
@@ -26,7 +26,7 @@ void Display::render_text (int x, int y,
             chr = utf8::next(it, text.cend());
         }
         catch (utf8::exception& utf_err) {
-            return;
+            return x + i;
         }
 
         // e.g:
@@ -44,6 +44,8 @@ void Display::render_text (int x, int y,
             y++;
         }
     }
+
+    return x + i;
 }
 
 };

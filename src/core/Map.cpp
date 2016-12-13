@@ -11,9 +11,10 @@ using namespace disp;
 
 Map::Map ()
     : back_tile_(TileSet::missing_id, false)
-{
-    auto* ts = Display::instance()->tile_set.get();
+{}
 
+void Map::generate_scene (TileSet* ts)
+{
     /* random seed using clock */
     std::default_random_engine rgen;
     rgen.seed(std::chrono::high_resolution_clock::now()
@@ -40,12 +41,9 @@ Map::Map ()
         }
 
     /* lamps and road markings */
-    Tile lamp(ts->tile_by_name("lamp-1"), false);
     for (int x = 0; x < size; x++) {
         if (x % 5 == 2)
             grid_[x + 20 * size] = Tile(ts->tile_by_name("road-mark-1"));
-        if (x % 11 == 3)
-            grid_[x + 14 * size] = lamp;
     }
 
     /* a building */
@@ -63,13 +61,13 @@ Map::Map ()
     /* a sign & a door */
     char m[] = " VAPORWAVE ";
     for (int i = 0; m[i]; i++) {
-        auto fmt = boost::format("sign-1-%c") % m[i];
+        auto fmt = boost::format("&sign-1-%c") % m[i];
         grid_[29 + i + 9 * size] = Tile(ts->tile_by_name(fmt.str()));
     }
    
-    Tile door(ts->tile_by_name("door-1"), false);
-    grid_[33 + 10 * size] =
-        grid_[34 + 10 * size] = door;
+    // Tile door(ts->tile_by_name("door-1"), false);
+    // grid_[33 + 10 * size] =
+    //     grid_[34 + 10 * size] = door;
 }
 
 const Tile& Map::tile_at (int x, int y)

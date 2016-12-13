@@ -6,6 +6,8 @@ namespace game {
 struct Map {
     Map ();
 
+    void generate_scene (disp::TileSet* ts);
+    
     const Tile& tile_at (int x, int y);
 
 private:
