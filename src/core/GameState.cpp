@@ -23,7 +23,7 @@ GameState::GameState ()
     Entity cash_proto(ts->tile_by_name("&cash"),
                       lvec(3, 3),
                       true);
-    cash_proto.set_description(u8"\u00a5" "100.");
+    cash_proto.set_description(u8"\u00a5"/*yen*/ "100.");
     scene.emplace_back(new Entity(std::move(cash_proto)));
 }
 
@@ -63,8 +63,9 @@ void GameState::process_control (Control k)
         /* find tile & entity at location */
         auto& dest_tile = map.tile_at(player_dest.x, player_dest.y);
         auto ent_it = std::find_if(scene.begin(), scene.end(),
-                                   [&] (auto& ent) { return ent->pos == player_dest; });
+                                   [&] (auto& ent) { return ent->pos == lvec(player_dest); });
 
+        /* collide with entity */
         bool can_walk = true;
         if (ent_it != scene.end()) {
             auto* ent = (*ent_it).get();
@@ -79,10 +80,12 @@ void GameState::process_control (Control k)
             }
         }
 
+        /* collide with tile */
         if (can_walk && !dest_tile.walkable) {
             can_walk = false;
         }
 
+        /* advance player */
         if (can_walk) {
             player = player_dest;
         }
