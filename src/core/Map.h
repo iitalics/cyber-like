@@ -8,7 +8,7 @@ struct Map {
 
     void generate_scene (disp::TileSet* ts);
     
-    const Tile& tile_at (int x, int y);
+    Tile& tile_at (int x, int y);
 
 private:
     enum { size = 60 };

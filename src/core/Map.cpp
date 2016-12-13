@@ -36,14 +36,13 @@ void Map::generate_scene (TileSet* ts)
 
     for (int y = 0; y < size; y++)
         for (int x = 0; x < size; x++) {
-            grid_[x + y * size] =
-                y < 16 ? pave_tile() : street_tile;
+            tile_at(x, y) = y < 16 ? pave_tile() : street_tile;
         }
 
     /* lamps and road markings */
     for (int x = 0; x < size; x++) {
         if (x % 5 == 2)
-            grid_[x + 20 * size] = Tile(ts->tile_by_name("road-mark-1"));
+            tile_at(x, 20) = Tile(ts->tile_by_name("road-mark-1"));
     }
 
     /* a building */
@@ -51,18 +50,17 @@ void Map::generate_scene (TileSet* ts)
     Tile stone_wall_2(ts->tile_by_name("stone-wall-3"), false);
     for (int x = 0; x < 20; x++)
         for (int y = 0; y < 10; y++) {
-            Tile& t = (x == 0 || y == 0 || x == 19 || y == 9)
+            tile_at(x + 24, y + 1) =
+                (x == 0 || y == 0 || x == 19 || y == 9)
                 ? stone_wall_1
                 : stone_wall_2;
-
-            grid_[(x + 24) + (y + 1) * size] = t;
         }
 
     /* a sign & a door */
     char m[] = " VAPORWAVE ";
     for (int i = 0; m[i]; i++) {
         auto fmt = boost::format("&sign-1-%c") % m[i];
-        grid_[29 + i + 9 * size] = Tile(ts->tile_by_name(fmt.str()));
+        tile_at(29 + i, 9) = Tile(ts->tile_by_name(fmt.str()));
     }
    
     // Tile door(ts->tile_by_name("door-1"), false);
@@ -70,7 +68,7 @@ void Map::generate_scene (TileSet* ts)
     //     grid_[34 + 10 * size] = door;
 }
 
-const Tile& Map::tile_at (int x, int y)
+Tile& Map::tile_at (int x, int y)
 {
     if (x < 0 || y < 0
         || x >= size || y >= size) {
