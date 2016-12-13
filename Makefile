@@ -40,6 +40,8 @@ clean: clean-libs
 # docs
 docs_gen=doxygen
 docs_config=doxygen-config
+docs_dir=./doc
 .PHONY: docs
 docs:
+	@mkdir -p $(docs_dir)
 	$(docs_gen) $(docs_config)
