@@ -49,24 +49,24 @@ void TermDisplay::end_draw ()
     tb_present();
 }
 
-boost::optional<Control> TermDisplay::poll_ctrl_event ()
+boost::optional<Action> TermDisplay::poll_user_action ()
 {
-    boost::optional<Control> retval;
+    boost::optional<Action> retval;
 
     struct tb_event evt;
     switch (tb_poll_event(&evt)) {
     case TB_EVENT_KEY:
         switch (evt.key) {
         case TB_KEY_CTRL_Q:
-            retval.reset(ControlCode::quit); break;
+            retval.reset(Action::quit); break;
         case TB_KEY_ARROW_LEFT:
-            retval.reset(ControlCode::left); break;
+            retval.reset(Action::left); break;
         case TB_KEY_ARROW_RIGHT:
-            retval.reset(ControlCode::right); break;
+            retval.reset(Action::right); break;
         case TB_KEY_ARROW_UP:
-            retval.reset(ControlCode::up); break;
+            retval.reset(Action::up); break;
         case TB_KEY_ARROW_DOWN:
-            retval.reset(ControlCode::down); break;
+            retval.reset(Action::down); break;
         }
         break;
 

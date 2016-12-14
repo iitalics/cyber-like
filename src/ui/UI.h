@@ -1,5 +1,5 @@
 #pragma once
-#include "../backend/Control.h"
+#include "../backend/Action.h"
 #include "../backend/Display.h"
 #include "../core/GameState.h"
 
@@ -22,11 +22,11 @@ struct UI {
     void render (disp::Display& disp);
 
     /**
-       Process user input control.
-       Delegates ctrl appropriately.
-       @param ctrl the kind of user input
+       Process user input action.
+       Delegates to either game_state or intermediate UI controls.
+       @param ac the specified action.
     */
-    void process_control (Control ctrl);
+    void process_action (Action ac);
 
     /**
        Internal game state for current game.

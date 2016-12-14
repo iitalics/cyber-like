@@ -9,9 +9,9 @@ UI::UI ()
 {
 }
 
-void UI::process_control (Control ctrl)
+void UI::process_action (Action ac)
 {
-    game_state.process_control(ctrl);
+    game_state.process_action(ac);
 }
 
 void UI::render (disp::Display& g)

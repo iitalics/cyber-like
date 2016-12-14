@@ -6,7 +6,6 @@ namespace game {
 
 GameState::GameState ()
     : player(0, 0)
-    , last_ctrl(0)
 {
     auto* ts = disp::Display::instance()->tile_set.get();
     map.generate_scene(ts);
@@ -27,27 +26,25 @@ GameState::GameState ()
     scene.emplace_back(new Entity(std::move(cash_proto)));
 }
 
-void GameState::process_control (Control k)
+void GameState::process_action (Action ac)
 {
-    last_ctrl = k;
-
     boost::string_ref direction_string;
     auto player_dest = player;
 
-    switch (k.code) {
-    case ControlCode::left:
+    switch (ac.kind) {
+    case Action::left:
         player_dest += ivec::left();
         direction_string = "west";
         break;
-    case ControlCode::right:
+    case Action::right:
         player_dest += ivec::right();
         direction_string = "east";
         break;
-    case ControlCode::up:
+    case Action::up:
         player_dest += ivec::up();
         direction_string = "north";
         break;
-    case ControlCode::down:
+    case Action::down:
         player_dest += ivec::down();
         direction_string = "south";
         break;

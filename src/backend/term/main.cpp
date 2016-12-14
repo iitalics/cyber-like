@@ -16,7 +16,7 @@ int main (int argc, char** argv)
         Display::set_instance(disp_ptr);
         
         ui::UI user_interface;
-        for (bool quit = false; ! quit; ) {
+        for (;;) {
             /* display */
             disp.begin_draw();
             //disp.render_text(1, 1, "hello", disp::Color::white());
@@ -24,11 +24,11 @@ int main (int argc, char** argv)
             disp.end_draw();
 
             /* handle events */
-            if (auto maybe_ctrl = disp.poll_ctrl_event()) {
-                if (*maybe_ctrl == ControlCode::quit)
-                    quit = true;
+            if (auto action = disp.poll_user_action()) {
+                if (*action == Action::quit)
+                    break;
                 else
-                    user_interface.process_control(*maybe_ctrl);
+                    user_interface.process_action(*action);
             }
         }
         return 0;

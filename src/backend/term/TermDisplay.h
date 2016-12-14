@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <boost/optional.hpp>
 #include "../Display.h"
-#include "../Control.h"
+#include "../Action.h"
 
 #include <termbox.h>
 
@@ -23,7 +23,7 @@ struct TermDisplay : public disp::Display {
     virtual void begin_draw ();
     virtual void end_draw ();
 
-    boost::optional<Control> poll_ctrl_event ();
+    boost::optional<Action> poll_user_action ();
     static uint16_t conv_color (disp::Color col);
 private:
     std::vector<TermCell> tiles;
