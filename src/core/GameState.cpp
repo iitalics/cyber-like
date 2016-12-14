@@ -1,4 +1,5 @@
 #include "GameState.h"
+#include "scripting.h"
 #include <boost/format.hpp>
 #include <utf8.h>
 
@@ -7,13 +8,17 @@ namespace game {
 GameState::GameState ()
     : player(0, 0)
 {
+    /* initialize lua context */
+    setup_lua_environment(*this);
+    
+    /* generate the map */
     auto* ts = disp::Display::instance()->tile_set.get();
     map.generate_scene(ts);
 
+    /* generate the scene */
     Entity light_proto(ts->tile_by_name("&lamp-1"),
                        lvec(5, 15));
     light_proto.set_description("A streetlight.");
-
     for (int i = 0; i < 6; i++) {
         scene.emplace_back(new Entity(light_proto));
         light_proto.pos.x += 8;
@@ -25,6 +30,12 @@ GameState::GameState ()
     cash_proto.set_description(u8"\u00a5"/*yen*/ "100.");
     scene.emplace_back(new Entity(std::move(cash_proto)));
 }
+
+GameState::~GameState ()
+{
+    lua_close(lua);
+}
+
 
 void GameState::process_action (Action ac)
 {

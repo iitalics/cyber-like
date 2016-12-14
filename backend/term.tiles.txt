@@ -10,8 +10,9 @@ ui-vp-c     (255a)  fff -
 ui-vp-d     (255d)  fff -
 ui-vp-h     (2550)  fff -
 ui-vp-v     (2551)  fff -
-ui-direction-font-? [?] c33 -
-ui-desc-font-? [?] 999 -
+ui-direction-font-?  [?] c33 -
+ui-desc-font-?       [?] 999 -
+ui-debug-font-?      [?] 3c3 -
 
 #### Map ####
 none         [ ]  000 000

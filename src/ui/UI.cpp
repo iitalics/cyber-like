@@ -75,6 +75,14 @@ void UI::render (disp::Display& g)
         tx = g.render_text(tx, ty, game_state.interact_desc,
                            "ui-desc-font");
     }
+
+    /* debug text */
+    {
+        int ty = 1, tx = 1;
+        for (auto& line : game_state.debug_text) {
+            g.render_text(tx, ty, line, "ui-debug-font");
+        }
+    }
 }
 
 
