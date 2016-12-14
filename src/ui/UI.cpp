@@ -80,7 +80,7 @@ void UI::render (disp::Display& g)
     {
         int ty = 1, tx = 1;
         for (auto& line : game_state.debug_text) {
-            g.render_text(tx, ty, line, "ui-debug-font");
+            g.render_text(tx, ty++, line, "ui-debug-font");
         }
     }
 }
